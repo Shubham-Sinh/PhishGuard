@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PhishGuard | AI Phishing Detection</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+    <div class="page">
+
+        <!-- HEADER -->
+
+        <header class="navbar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🛡️
+                </div>
+
+                <div>
+                    <div class="brand-name">
+                        PhishGuard
+                    </div>
+
+                    <div class="brand-subtitle">
+                        AI URL Security
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                AI ENGINE ONLINE
+
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <main>
+
+            <section class="hero">
+
+                <div class="badge">
+                    AI-POWERED THREAT DETECTION
+                </div>
+
+                <h1>
+                    Detect phishing
+                    <span>before it attacks.</span>
+                </h1>
+
+                <p class="hero-text">
+
+                    Analyze suspicious URLs using machine learning
+                    and advanced URL security signals.
+
+                </p>
+
+
+                <!-- SCANNER -->
+
+                <div class="scanner-card">
+
+                    <form method="POST" class="scanner-form">
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔗
+                            </span>
+
+                            <input type="text" name="url" placeholder="Enter a website URL..."
+                                value="{{ request.form.get('url', '') }}" autocomplete="off" required>
+
+                        </div>
+                        <div class="button-group">
+
+                            <button type="submit" class="scan-button">
+
+                                <span>Scan URL</span>
+
+                                <span class="button-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+                            {% if result %}
+                            <a href="/" class="clear-button">
+                                Clear
+                            </a>
+                            {% endif %}
+
+                        </div>
+
+
+                    </form>
+
+                    <div class="scanner-hint">
+
+                        🔒 Your URL is analyzed locally by the
+                        PhishGuard detection engine.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            {% if result and not result.error %}
+
+            <!-- RESULT -->
+
+            <section class="results-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            ANALYSIS COMPLETE
+                        </span>
+
+                        <h2>
+                            Security Assessment
+                        </h2>
+
+                    </div>
+
+                    <div class="scan-status">
+                        ✓ Scan completed
+                    </div>
+
+                </div>
+
+
+                <!-- URL -->
+
+                <div class="url-card">
+
+                    <div class="url-label">
+                        ANALYZED URL
+                    </div>
+
+                    <div class="url-value">
+                        {{ result.url }}
+                    </div>
+
+                    <div class="normalized">
+
+                        Normalized:
+                        <code>{{ result.normalized_url }}</code>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RISK -->
+
+                <div class="risk-card {{ result.risk_class }}">
+
+                    <div class="risk-header">
+
+                        <div>
+
+                            <div class="risk-label">
+                                OVERALL RISK
+                            </div>
+
+                            <div class="risk-title">
+
+                                <span>
+                                    {{ result.risk_icon }}
+                                </span>
+
+                                {{ result.risk_level }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="risk-percentage">
+
+                            {{ "%.2f"|format(result.phishing_probability) }}%
+
+                            <small>
+                                phishing probability
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROBABILITY BARS -->
+
+                    <div class="probability-group">
+
+                        <div class="probability-row">
+
+                            <div class="probability-name">
+                                <span>Legitimate</span>
+
+                                <strong>
+                                    {{ "%.2f"|format(result.legitimate_probability) }}%
+                                </strong>
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-legitimate" style="width: {{ result.legitimate_probability }}%;">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="probability-row">
+
+                            <div class="probability-name">
+                                <span>Phishing</span>
+
+                                <strong>
+                                    {{ "%.2f"|format(result.phishing_probability) }}%
+                                </strong>
+                            </div>
+
+                            <div class="progress">
+
+                                <div class="progress-phishing" style="width: {{ result.phishing_probability }}%;">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EXPLANATION -->
+
+                <div class="analysis-grid">
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div class="panel-icon">
+                                🔍
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    Why this result?
+                                </h3>
+
+                                <p>
+                                    URL security signals detected
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="signals">
+
+                            {% for signal in result.signals %}
+
+                            <div class="signal {{ signal.type }}">
+
+                                <div class="signal-icon">
+
+                                    {% if signal.type == "safe" %}
+                                    ✓
+                                    {% elif signal.type == "warning" %}
+                                    !
+                                    {% else %}
+                                    !
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="signal-content">
+
+                                    <strong>
+                                        {{ signal.title }}
+                                    </strong>
+
+                                    <span>
+                                        {{ signal.description }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MODEL INFO -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div class="panel-icon">
+                                🤖
+                            </div>
+
+                            <div>
+
+                                <h3>
+                                    AI Analysis
+                                </h3>
+
+                                <p>
+                                    Machine learning assessment
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="model-stats">
+
+                            <div class="stat">
+
+                                <span>
+                                    Model
+                                </span>
+
+                                <strong>
+                                    Character ML
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat">
+
+                                <span>
+                                    Classification
+                                </span>
+
+                                <strong>
+
+                                    {% if result.prediction == 1 %}
+                                    Phishing
+                                    {% else %}
+                                    Legitimate
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat">
+
+                                <span>
+                                    Confidence
+                                </span>
+
+                                <strong>
+                                    {{ "%.2f"|format(
+                                    result.phishing_probability
+                                    if result.prediction == 1
+                                    else result.legitimate_probability
+                                    ) }}%
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            {% elif result and result.error %}
+
+            <div class="error-card">
+
+                <strong>
+                    ⚠ Analysis failed
+                </strong>
+
+                <p>
+                    {{ result.error }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- FEATURES -->
+
+            <section class="features">
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Machine Learning
+                    </h3>
+
+                    <p>
+                        Character-based URL classification
+                        trained on thousands of URLs.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        URL Analysis
+                    </h3>
+
+                    <p>
+                        Detects suspicious patterns,
+                        IP addresses and URL characteristics.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Instant Detection
+                    </h3>
+
+                    <p>
+                        Analyze a URL and receive a
+                        risk assessment within seconds.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <div>
+                🛡️ <strong>PhishGuard</strong>
+                — AI-powered phishing detection
+            </div>
+
+            <div>
+                Built for cybersecurity research & education
+            </div>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
