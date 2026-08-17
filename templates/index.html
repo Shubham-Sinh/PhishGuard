@@ -2,24 +2,22 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>PhishGuard | AI Phishing Detection</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
 </head>
-
 
 <body>
 
     <div class="page">
 
-        <!-- HEADER -->
-
+        <!-- NAVBAR -->
         <header class="navbar">
 
             <div class="brand">
@@ -41,20 +39,17 @@
             </div>
 
             <div class="status">
-
                 <span class="status-dot"></span>
-
                 AI ENGINE ONLINE
-
             </div>
 
         </header>
 
 
-        <!-- HERO -->
-
+        <!-- MAIN -->
         <main>
 
+            <!-- HERO -->
             <section class="hero">
 
                 <div class="badge">
@@ -67,18 +62,17 @@
                 </h1>
 
                 <p class="hero-text">
-
                     Analyze suspicious URLs using machine learning
                     and advanced URL security signals.
-
                 </p>
 
 
                 <!-- SCANNER -->
-
                 <div class="scanner-card">
 
-                    <form method="POST" class="scanner-form">
+                    <form method="POST"
+                          class="scanner-form"
+                          id="scanForm">
 
                         <div class="input-wrapper">
 
@@ -86,37 +80,87 @@
                                 🔗
                             </span>
 
-                            <input type="text" name="url" placeholder="Enter a website URL..."
-                                value="{{ request.form.get('url', '') }}" autocomplete="off" required>
+                            <input
+                                type="text"
+                                name="url"
+                                placeholder="Enter a website URL..."
+                                value="{{ request.form.get('url', '') }}"
+                                autocomplete="off"
+                                required
+                            >
 
                         </div>
+
+
                         <div class="button-group">
 
-                            <button type="submit" class="scan-button">
+                            <button
+                                type="submit"
+                                class="scan-button"
+                                id="scanButton"
+                            >
 
-                                <span>Scan URL</span>
+                                <span id="scanText">
+                                    Scan URL
+                                </span>
 
-                                <span class="button-arrow">
+                                <span
+                                    class="button-arrow"
+                                    id="scanArrow"
+                                >
                                     →
                                 </span>
 
                             </button>
 
+
                             {% if result %}
-                            <a href="/" class="clear-button">
+
+                            <a
+                                href="/"
+                                class="clear-button"
+                            >
                                 Clear
                             </a>
+
                             {% endif %}
 
                         </div>
 
-
                     </form>
 
-                    <div class="scanner-hint">
 
-                        🔒 Your URL is analyzed locally by the
+                    <div class="scanner-hint">
+                        🔒 Your URL is analyzed by the
                         PhishGuard detection engine.
+                    </div>
+
+
+                    <!-- EXAMPLES -->
+                    <div class="examples">
+
+                        <span>Try:</span>
+
+                        <button
+                            type="button"
+                            onclick="setExample('https://google.com')"
+                        >
+                            google.com
+                        </button>
+
+                        <button
+                            type="button"
+                            onclick="setExample('http://192.168.1.10/login')"
+                        >
+                            suspicious IP
+                        </button>
+
+                        <button
+                            type="button"
+                            onclick="setExample('http://secure-login.com/verify/account123')"
+                        >
+                            phishing example
+                        </button>
 
                     </div>
 
@@ -127,8 +171,7 @@
 
             {% if result and not result.error %}
 
-            <!-- RESULT -->
-
+            <!-- RESULTS -->
             <section class="results-section">
 
                 <div class="section-heading">
@@ -152,8 +195,7 @@
                 </div>
 
 
-                <!-- URL -->
-
+                <!-- URL CARD -->
                 <div class="url-card">
 
                     <div class="url-label">
@@ -165,17 +207,14 @@
                     </div>
 
                     <div class="normalized">
-
                         Normalized:
                         <code>{{ result.normalized_url }}</code>
-
                     </div>
 
                 </div>
 
 
-                <!-- RISK -->
-
+                <!-- RISK CARD -->
                 <div class="risk-card {{ result.risk_class }}">
 
                     <div class="risk-header">
@@ -212,44 +251,61 @@
                     </div>
 
 
-                    <!-- PROBABILITY BARS -->
-
+                    <!-- PROBABILITY -->
                     <div class="probability-group">
 
+                        <!-- LEGITIMATE -->
                         <div class="probability-row">
 
                             <div class="probability-name">
-                                <span>Legitimate</span>
+
+                                <span>
+                                    Legitimate
+                                </span>
 
                                 <strong>
-                                    {{ "%.2f"|format(result.legitimate_probability) }}%
+                                    {{ "%.2f"|format(
+                                        result.legitimate_probability
+                                    ) }}%
                                 </strong>
+
                             </div>
 
                             <div class="progress">
 
-                                <div class="progress-legitimate" style="width: {{ result.legitimate_probability }}%;">
-                                </div>
+                                <div
+                                    class="progress-legitimate"
+                                    style="width: {{ result.legitimate_probability }}%;"
+                                ></div>
 
                             </div>
 
                         </div>
 
 
+                        <!-- PHISHING -->
                         <div class="probability-row">
 
                             <div class="probability-name">
-                                <span>Phishing</span>
+
+                                <span>
+                                    Phishing
+                                </span>
 
                                 <strong>
-                                    {{ "%.2f"|format(result.phishing_probability) }}%
+                                    {{ "%.2f"|format(
+                                        result.phishing_probability
+                                    ) }}%
                                 </strong>
+
                             </div>
 
                             <div class="progress">
 
-                                <div class="progress-phishing" style="width: {{ result.phishing_probability }}%;">
-                                </div>
+                                <div
+                                    class="progress-phishing"
+                                    style="width: {{ result.phishing_probability }}%;"
+                                ></div>
 
                             </div>
 
@@ -260,11 +316,11 @@
                 </div>
 
 
-                <!-- EXPLANATION -->
-
+                <!-- ANALYSIS GRID -->
                 <div class="analysis-grid">
 
 
+                    <!-- SECURITY SIGNALS -->
                     <div class="panel">
 
                         <div class="panel-header">
@@ -297,14 +353,21 @@
                                 <div class="signal-icon">
 
                                     {% if signal.type == "safe" %}
-                                    ✓
+
+                                        ✓
+
                                     {% elif signal.type == "warning" %}
-                                    !
+
+                                        !
+
                                     {% else %}
-                                    !
+
+                                        !
+
                                     {% endif %}
 
                                 </div>
+
 
                                 <div class="signal-content">
 
@@ -327,8 +390,7 @@
                     </div>
 
 
-                    <!-- MODEL INFO -->
-
+                    <!-- AI ANALYSIS -->
                     <div class="panel">
 
                         <div class="panel-header">
@@ -354,6 +416,7 @@
 
                         <div class="model-stats">
 
+
                             <div class="stat">
 
                                 <span>
@@ -376,9 +439,13 @@
                                 <strong>
 
                                     {% if result.prediction == 1 %}
-                                    Phishing
+
+                                        Phishing
+
                                     {% else %}
-                                    Legitimate
+
+                                        Legitimate
+
                                     {% endif %}
 
                                 </strong>
@@ -393,11 +460,26 @@
                                 </span>
 
                                 <strong>
+
                                     {{ "%.2f"|format(
-                                    result.phishing_probability
-                                    if result.prediction == 1
-                                    else result.legitimate_probability
+                                        result.phishing_probability
+                                        if result.prediction == 1
+                                        else result.legitimate_probability
                                     ) }}%
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="stat">
+
+                                <span>
+                                    Risk level
+                                </span>
+
+                                <strong>
+                                    {{ result.risk_level }}
                                 </strong>
 
                             </div>
@@ -413,6 +495,7 @@
 
             {% elif result and result.error %}
 
+            <!-- ERROR -->
             <div class="error-card">
 
                 <strong>
@@ -429,8 +512,8 @@
 
 
             <!-- FEATURES -->
-
             <section class="features">
+
 
                 <div class="feature">
 
@@ -491,7 +574,6 @@
 
 
         <!-- FOOTER -->
-
         <footer>
 
             <div>
@@ -506,6 +588,73 @@
         </footer>
 
     </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        function setExample(url) {
+
+            const input = document.querySelector(
+                'input[name="url"]'
+            );
+
+            if (input) {
+
+                input.value = url;
+
+                input.focus();
+
+            }
+
+        }
+
+
+        const scanForm =
+            document.getElementById("scanForm");
+
+        const scanButton =
+            document.getElementById("scanButton");
+
+        const scanText =
+            document.getElementById("scanText");
+
+        const scanArrow =
+            document.getElementById("scanArrow");
+
+
+        if (scanForm) {
+
+            scanForm.addEventListener(
+                "submit",
+                function () {
+
+                    if (scanButton) {
+
+                        scanButton.disabled = true;
+
+                    }
+
+                    if (scanText) {
+
+                        scanText.textContent =
+                            "Analyzing...";
+
+                    }
+
+                    if (scanArrow) {
+
+                        scanArrow.textContent =
+                            "◌";
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
 
 </body>
 
