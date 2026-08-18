@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Creator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/creator.css') }}">
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- NAVBAR -->
+        <header class="navbar">
+            <a href="/" class="brand">
+                <div class="brand-icon">🛡️</div>
+                <div>
+                    <div class="brand-name">PhishGuard</div>
+                    <div class="brand-subtitle">AI URL Security</div>
+                </div>
+            </a>
+
+            <a href="/" class="back-button">← Back to Scanner</a>
+        </header>
+
+        <main>
+
+            <!-- HERO -->
+            <section class="creator-hero">
+                <div class="badge">THE CREATOR</div>
+                <div class="avatar">
+                    <img src="{{ url_for('static', filename='images/profile.jpeg') }}" alt="Shubham Singh">
+                </div>
+
+                <h1>Meet <span>Shubham Singh.</span></h1>
+
+                <p class="hero-text">
+                    A Computer Science student and developer interested in
+                    cybersecurity, artificial intelligence and building useful
+                    technology.
+                </p>
+
+                <div class="social-links">
+                    <a href="https://github.com/Shubham-Sinh" target="_blank" rel="noopener" class="social github">
+                        <span>⌘</span> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/shubham-singh-23978a214/" target="_blank" rel="noopener"
+                        class="social linkedin">
+                        <span>in</span> LinkedIn
+                    </a>
+                    <a href="https://www.instagram.com/_the.shubham.singh_/" target="_blank" rel="noopener"
+                        class="social instagram">
+                        <span>◎</span> Instagram
+                    </a>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="content-grid">
+
+                <article class="about-card">
+                    <div class="section-label">01 / ABOUT</div>
+                    <h2>Building with a security-first mindset.</h2>
+                    <p>
+                        PhishGuard was created as a cybersecurity project focused
+                        on helping users understand the risks hidden inside URLs.
+                        The project combines machine learning with URL-based
+                        security signals to classify suspicious links.
+                    </p>
+                    <p>
+                        The goal is simple: make phishing detection easier to
+                        understand while exploring practical applications of
+                        machine learning and web development.
+                    </p>
+                </article>
+
+                <article class="stats-card">
+                    <div class="section-label">02 / PROJECT</div>
+
+                    <div class="stat-row">
+                        <span>Project</span>
+                        <strong>PhishGuard</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Focus</span>
+                        <strong>Cybersecurity</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Detection</span>
+                        <strong>Machine Learning</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Interface</span>
+                        <strong>Web + Mobile</strong>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- SKILLS -->
+            <section class="skills-section">
+                <div class="section-label">03 / TECHNOLOGIES</div>
+                <h2>Things behind the project.</h2>
+
+                <div class="skills-grid">
+                    <div class="skill">
+                        <span class="skill-icon">🐍</span>
+                        <div>
+                            <strong>Python</strong>
+                            <small>ML & backend development</small>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span class="skill-icon">🤖</span>
+                        <div>
+                            <strong>Machine Learning</strong>
+                            <small>URL classification</small>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span class="skill-icon">🌐</span>
+                        <div>
+                            <strong>HTML / CSS / JS</strong>
+                            <small>Web interface</small>
+                        </div>
+                    </div>
+
+                    <div class="skill">
+                        <span class="skill-icon">🛡️</span>
+                        <div>
+                            <strong>Cybersecurity</strong>
+                            <small>Phishing & threat analysis</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURES -->
+            <section class="creator-features">
+                <div class="section-label">04 / WHY PHISHGUARD</div>
+                <h2>More than a URL scanner.</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-number">01</div>
+                        <h3>Explainable</h3>
+                        <p>
+                            Shows security signals behind a result instead of
+                            giving users only a yes-or-no answer.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-number">02</div>
+                        <h3>Practical</h3>
+                        <p>
+                            Designed around real URL characteristics that can
+                            indicate suspicious or malicious behaviour.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-number">03</div>
+                        <h3>Expandable</h3>
+                        <p>
+                            Built as a foundation that can grow into a broader
+                            phishing-awareness and protection platform.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta">
+                <div>
+                    <span class="section-label">05 / EXPLORE</span>
+                    <h2>Ready to scan a suspicious URL?</h2>
+                    <p>Return to PhishGuard and test a link with the detection engine.</p>
+                </div>
+
+                <a href="https://phishguard-548g.onrender.com/" class="cta-button">Open PhishGuard →</a>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <div>🛡️ <strong>PhishGuard</strong> — AI-powered phishing detection</div>
+            <div>Created by <strong>Shubham Singh</strong></div>
+        </footer>
+
+    </div>
+</body>
+
+</html>

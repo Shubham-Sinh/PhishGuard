@@ -79,6 +79,9 @@ def api_check():
             "details": str(e)
         }), 500
 
+@app.route("/creator")
+def creator():
+    return render_template("creator.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
